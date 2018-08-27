@@ -1,0 +1,411 @@
+Determining if files io.h exist failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_c450f/fast"
+/usr/bin/make -f CMakeFiles/cmTC_c450f.dir/build.make CMakeFiles/cmTC_c450f.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c450f.dir/CheckIncludeFiles.c.o
+/usr/bin/cc   -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter     -o CMakeFiles/cmTC_c450f.dir/CheckIncludeFiles.c.o   -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c:2:10: fatal error: io.h: No such file or directory
+ #include <io.h>
+          ^~~~~~
+compilation terminated.
+CMakeFiles/cmTC_c450f.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_c450f.dir/CheckIncludeFiles.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_c450f.dir/CheckIncludeFiles.c.o] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_c450f/fast' failed
+make: *** [cmTC_c450f/fast] Error 2
+
+Source:
+/* */
+#include <io.h>
+
+
+int main(void){return 0;}
+
+Determining if the memalign exist failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_8aa0b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_8aa0b.dir/build.make CMakeFiles/cmTC_8aa0b.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_8aa0b.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -Wundef -Wextra -Wno-missing-field-initializers -Wpointer-arith -Wall -Wno-unused-function     -o CMakeFiles/cmTC_8aa0b.dir/CheckSymbolExists.cxx.o -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main(int, char**)’:
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: ‘memalign’ was not declared in this scope
+   return ((int*)(&memalign))[argc];
+                   ^~~~~~~~
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: note: suggested alternative: ‘main’
+   return ((int*)(&memalign))[argc];
+                   ^~~~~~~~
+                   main
+CMakeFiles/cmTC_8aa0b.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_8aa0b.dir/CheckSymbolExists.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_8aa0b.dir/CheckSymbolExists.cxx.o] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_8aa0b/fast' failed
+make: *** [cmTC_8aa0b/fast] Error 2
+
+File /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef memalign
+  return ((int*)(&memalign))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the _aligned_malloc exist failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_eafef/fast"
+/usr/bin/make -f CMakeFiles/cmTC_eafef.dir/build.make CMakeFiles/cmTC_eafef.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_eafef.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -Wundef -Wextra -Wno-missing-field-initializers -Wpointer-arith -Wall -Wno-unused-function     -o CMakeFiles/cmTC_eafef.dir/CheckSymbolExists.cxx.o -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main(int, char**)’:
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: ‘_aligned_malloc’ was not declared in this scope
+   return ((int*)(&_aligned_malloc))[argc];
+                   ^~~~~~~~~~~~~~~
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: note: suggested alternative: ‘aligned_alloc’
+   return ((int*)(&_aligned_malloc))[argc];
+                   ^~~~~~~~~~~~~~~
+                   aligned_alloc
+CMakeFiles/cmTC_eafef.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_eafef.dir/CheckSymbolExists.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_eafef.dir/CheckSymbolExists.cxx.o] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_eafef/fast' failed
+make: *** [cmTC_eafef/fast] Error 2
+
+File /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef _aligned_malloc
+  return ((int*)(&_aligned_malloc))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the _fileno exist failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_e66e4/fast"
+/usr/bin/make -f CMakeFiles/cmTC_e66e4.dir/build.make CMakeFiles/cmTC_e66e4.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_e66e4.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -Wundef -Wextra -Wno-missing-field-initializers -Wpointer-arith -Wall -Wno-unused-function     -o CMakeFiles/cmTC_e66e4.dir/CheckSymbolExists.cxx.o -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main(int, char**)’:
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: ‘_fileno’ was not declared in this scope
+   return ((int*)(&_fileno))[argc];
+                   ^~~~~~~
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: note: suggested alternative: ‘fileno’
+   return ((int*)(&_fileno))[argc];
+                   ^~~~~~~
+                   fileno
+CMakeFiles/cmTC_e66e4.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_e66e4.dir/CheckSymbolExists.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_e66e4.dir/CheckSymbolExists.cxx.o] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_e66e4/fast' failed
+make: *** [cmTC_e66e4/fast] Error 2
+
+File /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef _fileno
+  return ((int*)(&_fileno))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the _commit exist failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_b8b30/fast"
+/usr/bin/make -f CMakeFiles/cmTC_b8b30.dir/build.make CMakeFiles/cmTC_b8b30.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_b8b30.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -Wundef -Wextra -Wno-missing-field-initializers -Wpointer-arith -Wall -Wno-unused-function     -o CMakeFiles/cmTC_b8b30.dir/CheckSymbolExists.cxx.o -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:2:10: fatal error: io.h: No such file or directory
+ #include <io.h>
+          ^~~~~~
+compilation terminated.
+CMakeFiles/cmTC_b8b30.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_b8b30.dir/CheckSymbolExists.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_b8b30.dir/CheckSymbolExists.cxx.o] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_b8b30/fast' failed
+make: *** [cmTC_b8b30/fast] Error 2
+
+File /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <io.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef _commit
+  return ((int*)(&_commit))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the rsqrt exist failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_8ee2b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_8ee2b.dir/build.make CMakeFiles/cmTC_8ee2b.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_8ee2b.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -Wundef -Wextra -Wno-missing-field-initializers -Wpointer-arith -Wall -Wno-unused-function     -o CMakeFiles/cmTC_8ee2b.dir/CheckSymbolExists.cxx.o -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main(int, char**)’:
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: ‘rsqrt’ was not declared in this scope
+   return ((int*)(&rsqrt))[argc];
+                   ^~~~~
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: note: suggested alternative: ‘sqrt’
+   return ((int*)(&rsqrt))[argc];
+                   ^~~~~
+                   sqrt
+CMakeFiles/cmTC_8ee2b.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_8ee2b.dir/CheckSymbolExists.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_8ee2b.dir/CheckSymbolExists.cxx.o] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_8ee2b/fast' failed
+make: *** [cmTC_8ee2b/fast] Error 2
+
+File /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <math.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef rsqrt
+  return ((int*)(&rsqrt))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the rsqrtf exist failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_4eeaa/fast"
+/usr/bin/make -f CMakeFiles/cmTC_4eeaa.dir/build.make CMakeFiles/cmTC_4eeaa.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_4eeaa.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -Wundef -Wextra -Wno-missing-field-initializers -Wpointer-arith -Wall -Wno-unused-function     -o CMakeFiles/cmTC_4eeaa.dir/CheckSymbolExists.cxx.o -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main(int, char**)’:
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: ‘rsqrtf’ was not declared in this scope
+   return ((int*)(&rsqrtf))[argc];
+                   ^~~~~~
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: note: suggested alternative: ‘sqrtf’
+   return ((int*)(&rsqrtf))[argc];
+                   ^~~~~~
+                   sqrtf
+CMakeFiles/cmTC_4eeaa.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_4eeaa.dir/CheckSymbolExists.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_4eeaa.dir/CheckSymbolExists.cxx.o] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_4eeaa/fast' failed
+make: *** [cmTC_4eeaa/fast] Error 2
+
+File /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <math.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef rsqrtf
+  return ((int*)(&rsqrtf))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_5b866/fast"
+/usr/bin/make -f CMakeFiles/cmTC_5b866.dir/build.make CMakeFiles/cmTC_5b866.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5b866.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter     -o CMakeFiles/cmTC_5b866.dir/CheckSymbolExists.c.o   -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_5b866
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5b866.dir/link.txt --verbose=1
+/usr/bin/cc  -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter      -rdynamic CMakeFiles/cmTC_5b866.dir/CheckSymbolExists.c.o  -o cmTC_5b866 
+CMakeFiles/cmTC_5b866.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_5b866.dir/build.make:97: recipe for target 'cmTC_5b866' failed
+make[1]: *** [cmTC_5b866] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_5b866/fast' failed
+make: *** [cmTC_5b866/fast] Error 2
+
+File /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_565ed/fast"
+/usr/bin/make -f CMakeFiles/cmTC_565ed.dir/build.make CMakeFiles/cmTC_565ed.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_565ed.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter  -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_565ed.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_565ed
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_565ed.dir/link.txt --verbose=1
+/usr/bin/cc  -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_565ed.dir/CheckFunctionExists.c.o  -o cmTC_565ed -lpthreads 
+/usr/bin/x86_64-linux-gnu-ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_565ed.dir/build.make:97: recipe for target 'cmTC_565ed' failed
+make[1]: *** [cmTC_565ed] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_565ed/fast' failed
+make: *** [cmTC_565ed/fast] Error 2
+
+
+Performing C SOURCE FILE Test _isfinite_compile_ok failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_38df0/fast"
+/usr/bin/make -f CMakeFiles/cmTC_38df0.dir/build.make CMakeFiles/cmTC_38df0.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_38df0.dir/src.c.o
+/usr/bin/cc  -I/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/math.h  -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter  -D_isfinite_compile_ok   -o CMakeFiles/cmTC_38df0.dir/src.c.o   -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c: In function ‘main’:
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c:4:3: warning: implicit declaration of function ‘_isfinite’; did you mean ‘isfinite’? [-Wimplicit-function-declaration]
+   _isfinite(f);
+   ^~~~~~~~~
+   isfinite
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c:4:3: warning: ‘f’ is used uninitialized in this function [-Wuninitialized]
+   _isfinite(f);
+   ^~~~~~~~~~~~
+Linking C executable cmTC_38df0
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_38df0.dir/link.txt --verbose=1
+/usr/bin/cc  -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter  -D_isfinite_compile_ok    -rdynamic CMakeFiles/cmTC_38df0.dir/src.c.o  -o cmTC_38df0 -lm 
+CMakeFiles/cmTC_38df0.dir/src.c.o: In function `main':
+src.c:(.text+0x13): undefined reference to `_isfinite'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_38df0.dir/build.make:97: recipe for target 'cmTC_38df0' failed
+make[1]: *** [cmTC_38df0] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_38df0/fast' failed
+make: *** [cmTC_38df0/fast] Error 2
+
+Source file was:
+#include <math.h>
+int main(void) {
+  float f;
+  _isfinite(f);
+}
+Performing C SOURCE FILE Test _finite_compile_ok failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7e1ca/fast"
+/usr/bin/make -f CMakeFiles/cmTC_7e1ca.dir/build.make CMakeFiles/cmTC_7e1ca.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_7e1ca.dir/src.c.o
+/usr/bin/cc  -I/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/float.h  -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter  -D_finite_compile_ok   -o CMakeFiles/cmTC_7e1ca.dir/src.c.o   -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c: In function ‘main’:
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c:4:3: warning: implicit declaration of function ‘_finite’ [-Wimplicit-function-declaration]
+   _finite(f);
+   ^~~~~~~
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c:4:3: warning: ‘f’ is used uninitialized in this function [-Wuninitialized]
+   _finite(f);
+   ^~~~~~~~~~
+Linking C executable cmTC_7e1ca
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7e1ca.dir/link.txt --verbose=1
+/usr/bin/cc  -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter  -D_finite_compile_ok    -rdynamic CMakeFiles/cmTC_7e1ca.dir/src.c.o  -o cmTC_7e1ca 
+CMakeFiles/cmTC_7e1ca.dir/src.c.o: In function `main':
+src.c:(.text+0x13): undefined reference to `_finite'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_7e1ca.dir/build.make:97: recipe for target 'cmTC_7e1ca' failed
+make[1]: *** [cmTC_7e1ca] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_7e1ca/fast' failed
+make: *** [cmTC_7e1ca/fast] Error 2
+
+Source file was:
+#include <float.h>
+int main(void) {
+  float f;
+  _finite(f);
+}
+Performing C SOURCE FILE Test _callconv___vectorcall failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_40d7b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_40d7b.dir/build.make CMakeFiles/cmTC_40d7b.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_40d7b.dir/src.c.o
+/usr/bin/cc   -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter  -D_callconv___vectorcall   -o CMakeFiles/cmTC_40d7b.dir/src.c.o   -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c:1:18: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘f’
+ int __vectorcall f(int i) {return i;} int main(void) {return f(0);}
+                  ^
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c: In function ‘main’:
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c:1:62: warning: implicit declaration of function ‘f’ [-Wimplicit-function-declaration]
+ int __vectorcall f(int i) {return i;} int main(void) {return f(0);}
+                                                              ^
+CMakeFiles/cmTC_40d7b.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_40d7b.dir/src.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_40d7b.dir/src.c.o] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_40d7b/fast' failed
+make: *** [cmTC_40d7b/fast] Error 2
+
+Source file was:
+int __vectorcall f(int i) {return i;} int main(void) {return f(0);}
+Performing C SOURCE FILE Test _callconv___regcall failed with the following output:
+Change Dir: /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_8b577/fast"
+/usr/bin/make -f CMakeFiles/cmTC_8b577.dir/build.make CMakeFiles/cmTC_8b577.dir/build
+make[1]: Entering directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_8b577.dir/src.c.o
+/usr/bin/cc   -Wundef -Wextra -Wno-missing-field-initializers -Wno-sign-compare -Wpointer-arith -Wall -Wno-unused -Wunused-value -Wunused-parameter  -D_callconv___regcall   -o CMakeFiles/cmTC_8b577.dir/src.c.o   -c /Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c:1:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘f’
+ int __regcall f(int i) {return i;} int main(void) {return f(0);}
+               ^
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c: In function ‘main’:
+/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp/src.c:1:59: warning: implicit declaration of function ‘f’ [-Wimplicit-function-declaration]
+ int __regcall f(int i) {return i;} int main(void) {return f(0);}
+                                                           ^
+CMakeFiles/cmTC_8b577.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_8b577.dir/src.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_8b577.dir/src.c.o] Error 1
+make[1]: Leaving directory '/Archival/gromacs/gmx_mpi_ensemble/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_8b577/fast' failed
+make: *** [cmTC_8b577/fast] Error 2
+
+Source file was:
+int __regcall f(int i) {return i;} int main(void) {return f(0);}
