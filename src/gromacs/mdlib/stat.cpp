@@ -428,7 +428,7 @@ void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
     double zmin   = (inputrec->pot_params)[0];
     double zstep  = (inputrec->pot_params)[2];
     double z_bbox = (state_local->box)[2][2];
-    //double second_moment = (inputrec->second_moment);
+    double second_moment = (inputrec->second_moment);
     double z, nrm, sum;
     int    z_low = 0, z_hi = 0;
     int    ndx_l, ndx_h, ii;
@@ -511,8 +511,8 @@ void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
         
         // If the offset < the width of the profile, update the ensemble
-        //if ( abs( (inputrec->sim_mean)[ii] - (inputrec->exp_mean)[0] ) < second_moment)
-	if (0.0 == 0.0)
+        if ( abs( (inputrec->sim_mean)[ii] - (inputrec->exp_mean)[0] ) < second_moment)
+	//if (0.0 == 0.0)
         {
             for (i=0; i<10000; i++)
             {

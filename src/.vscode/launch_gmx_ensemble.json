@@ -1,0 +1,2 @@
+cd /Archival/brad/PTEN/dir2_ensemble/
+/Archival/gromacs/gmx_mpi_ensemble/build/bin/gmx_mpi mdrun -cp testing.cpt -s testing.tpr -deffnm output_testing
