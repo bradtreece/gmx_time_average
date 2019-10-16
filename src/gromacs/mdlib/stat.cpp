@@ -63,6 +63,7 @@
 #include "gromacs/utility/futil.h"
 #include "gromacs/utility/smalloc.h"
 
+
 typedef struct gmx_global_stat
 {
     t_bin *rb;
@@ -399,141 +400,6 @@ void global_stat(FILE *fplog, gmx_global_stat_t gs,
     }
     where();
 }
-
-// Brad
-void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
-                 t_inputrec *inputrec, t_state *state_local,
-		 t_mdatoms *mdatoms, t_state *state_global)
-{
-    t_bin *rb;
-    rb   = gs->rb;
-
-    int isim_dens_temp = 0;
-    int homenr    = mdatoms->homenr;
-    int i=0, j=0;
-
-    // This routine copies all the data to be summed into one big buffer
-    // using the t_bin struct.
-
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
-    // This protocol needs modified //
-    //    to loop over molecules    //
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
-
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
-    // Calculate the local density //
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
-
-    // Obtain the global density parameters (nm)
-    double zmin   = (inputrec->pot_params)[0];
-    double zstep  = (inputrec->pot_params)[2];
-    double z_bbox = (state_local->box)[2][2];
-    double second_moment = (inputrec->second_moment);
-    double z, nrm, sum;
-    int    z_low = 0, z_hi = 0;
-    int    ndx_l, ndx_h, ii;
-    //int num_of_states = (state_local->num_of_states);
-
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
-    // Update z-vector for bounding box // 
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
-
-    (inputrec->z_bbox) = z_bbox;
-
-    /* Loop over all pairs of indices:
-       indices[0] is the number of molecules being forced.
-       After indices[0], there are that many pairs of integers in 'indices' containing the start 
-       and stop index in the .gro (or global index+1) for each molecule        */
-    for (ii = 0;ii < (int) (inputrec->pot_indices)[0];ii++)
-    {
-	//printf("\n\n\nloop=%i,node=%i\n\n\n", ii, cr->nodeid);
-        ndx_l = (int) (inputrec->pot_indices)[2*ii+1] - 1; // Set the bounds of global index for forced atoms
-        ndx_h = (int) (inputrec->pot_indices)[2*ii+2] - 1;
-        nrm   = (ndx_h-ndx_l+1)*pow(2.0*M_PI,0.5)*0.1; // # of atoms * integral of single gaussian (sigma = 0.1 nm) gives a unit area for full profile as the norm 
-
-
-        // Intialize the density variable
-        for (i=0; i<10000; i++)
-        {
-            (inputrec->sim_dens_temp)[i] = 0.0;
-        }
-
-        // Add up contributions
-        for (i=0; i<homenr; i++)
-        {
-            if ((cr->dd->gatindex[i] >= ndx_l)&&(cr->dd->gatindex[i] <= ndx_h))
-            {
-                z = (state_local->x)[i][2];
-                // If the z-value is smaller than the minimum in the potential, add the z-value of the bounding box 
-                //     otherwise, the index for the array could compute to be negative. Only works for rectangular pbc.
-                if (z<zmin)
-                {
-                    z += z_bbox;
-                }
-		// The contribution comes from z +/- 3 sigma
-                z_low = floor( ( z-0.3 - zmin ) / zstep );
-                z_hi  = floor( ( z+0.3 - zmin ) / zstep );
-
-                for(j=z_low;(j<z_hi);j++) // Add in all the contribuitons to the density between +/- 3 sigma
-                {
-                    (inputrec->sim_dens_temp)[j] += exp(-0.5*pow( z-(zmin + zstep*j) ,2)/0.01)/nrm; // sigma**2 = 0.01 nm**2
-                }
-            }
-        }
-
-        //%%%%%%%%%%%%%%%%%%%%//
-        // Sum over the nodes //
-        //%%%%%%%%%%%%%%%%%%%%//
-
-        isim_dens_temp = add_binr(rb, 10000, inputrec->sim_dens_temp);
-        where();
-
-        sum_bin(rb, cr);
-        where();
-
-        extract_binr(rb, isim_dens_temp, 10000, inputrec->sim_dens_temp);
-        where();
-
-        //%%%%%%%%%%%%%%%%%%%%//
-        // Calculate the mean //
-        //%%%%%%%%%%%%%%%%%%%%//
-    
-        sum = 0.0;
-        for (i=0;i<10000;i++)
-        {
-            z = zmin + zstep*i;
-            sum += zstep*z*(inputrec->sim_dens_temp)[i];
-        }
-        (inputrec->sim_mean)[ii] = sum;
-
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
-        // Set The Simulation Density //
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
-        
-        // If the offset < the width of the profile, update the ensemble
-        if ( abs( (inputrec->sim_mean)[ii] - (inputrec->exp_mean)[0] ) < second_moment)
-	//if (0.0 == 0.0)
-        {
-            for (i=0; i<10000; i++)
-            {
-		//(state_local->ens_dens)[i] = (num_of_states*(inputrec->ens_dens)[i] + (inputrec->sim_dens_temp)[i]) / (num_of_states + 1); // The local ens_dens has not been allocated in memory!!!!!
-                (state_global->ens_dens)[i] = ((state_global->num_of_states)*(state_global->ens_dens)[i] + (inputrec->sim_dens_temp)[i]) / ((state_global->num_of_states) + 1);
-                (inputrec->sim_dens)[ii][i] = (state_global->ens_dens)[i];
-            }
-            //num_of_states += 1;
-	    (state_global->num_of_states) += 1;
-	    (state_local->num_of_states)  += 1;
-        }
-        else
-        {
-            for (i=0; i<10000; i++)
-            {
-                (inputrec->sim_dens)[ii][i] = (inputrec->sim_dens_temp)[i];
-            }
-        }
-    }
-}
-// Brad
 
 int do_per_step(gmx_int64_t step, gmx_int64_t nstep)
 {

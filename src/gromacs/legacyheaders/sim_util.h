@@ -82,12 +82,6 @@ void global_stat(FILE *log, gmx_global_stat_t gs,
                  gmx_bool bSumEkinhOld, int flags);
 /* Communicate statistics over cr->mpi_comm_mysim */
 
-//Brad
-void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
-                 t_inputrec *inputrec, t_state *state_local,
-                 t_mdatoms *mdatoms, t_state *state_global);
-//Brad
-
 int do_per_step(gmx_int64_t step, gmx_int64_t nstep);
 /* Return TRUE if io should be done */
 

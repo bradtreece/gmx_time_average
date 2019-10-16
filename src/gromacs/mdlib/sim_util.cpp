@@ -1971,11 +1971,11 @@ void do_force_cutsGROUP(FILE *fplog, t_commrec *cr,
 }
 
 
-// Neutron derived forces - Brad
+// Neutron derived forces - Bradley Treece
 //
 //
 
-void do_user_external_force(rvec x[], rvec f[], real indices[], real params[],
+void do_user_external_force(rvec x[], rvec f[], int indices[], real params[],
                             real scale[], real exp_dens[], real exp_mean[],
                             real sim_dens[5][10000], real sim_mean[], double z_bbox,
                             double second_moment, t_mdatoms *mdatoms, t_commrec *cr)
@@ -1989,11 +1989,11 @@ void do_user_external_force(rvec x[], rvec f[], real indices[], real params[],
        indices[0] is the number of molecules being forced.
        After indices[0], there are that many pairs of integers in 'indices' containing the start 
        and stop index in the .gro (or global index+1) for each molecule        */
-    for (ii=0;(ii<(int) indices[0]);ii++)
+    for (ii=0; ii<indices[0] ;ii++)
     {
 
-        ndx_l  = (int) indices[2*ii+1] - 1; // Set the bounds of global index for forced atoms
-        ndx_h  = (int) indices[2*ii+2] - 1;
+        ndx_l  = indices[2*ii+1] - 1; // Set the bounds of global index for forced atoms
+        ndx_h  = indices[2*ii+2] - 1;
 	offset = sim_mean[ii] - exp_mean[0]; // The offset aligns the two densities for the potential
         if (abs(offset) < second_moment)
         {
@@ -2095,12 +2095,12 @@ void do_force(FILE *fplog, t_commrec *cr,
             gmx_incons("Invalid cut-off scheme passed!");
 
     }
-    // Brad - do external forcing
-    //printf("\n\n\nir->exp_dens = {%f,%f}\n", inputrec->exp_dens[0], inputrec->exp_dens[1]);
-    do_user_external_force(x, f, inputrec->pot_indices, inputrec->pot_params,
-                           inputrec->pot_scale, inputrec->exp_dens, inputrec->exp_mean,
-                           inputrec->sim_dens, inputrec->sim_mean, inputrec->z_bbox,
-                           inputrec->second_moment, mdatoms, cr);
+    // Bradley Treece - do external forcing
+    do_user_external_force(x, f, inputrec->neu_inp->pot_indices, inputrec->neu_inp->pot_params,
+                           inputrec->neu_inp->pot_scale, inputrec->neu_inp->exp_dens,
+			   inputrec->neu_inp->exp_mean, inputrec->neu_inp->sim_dens,
+			   inputrec->neu_inp->sim_mean, inputrec->neu_inp->z_bbox,
+                           inputrec->neu_inp->second_moment, mdatoms, cr);
 
     /*if (fmod(t,0.1)==0.0)
     {
@@ -2111,7 +2111,7 @@ void do_force(FILE *fplog, t_commrec *cr,
         }
         printf(",   t=%f \n\n\n", t);
     }*/
-    // Brad
+    // Bradley Treece
 }
 
 void do_constrain_first(FILE *fplog, gmx_constr_t constr,

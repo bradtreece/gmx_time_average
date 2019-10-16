@@ -403,6 +403,32 @@ void pr_reals_of_dim(FILE *fp, int indent, const char *title, real *vec, int n, 
     }
 }
 
+// Bradley Treece
+void pr_ints_of_dim(FILE *fp, int indent, const char *title, int *vec, int n, int dim)
+{
+    int         i, j;
+
+    if (available(fp, vec, indent, title))
+    {
+        indent = pr_title_nxn(fp, indent, title, n, dim);
+        for (i = 0; i < n; i++)
+        {
+            (void) pr_indent(fp, indent);
+            (void) fprintf(fp, "%s[%5d]={", title, i);
+            for (j = 0; j < dim; j++)
+            {
+                if (j != 0)
+                {
+                    (void) fprintf(fp, ", ");
+                }
+                (void) fprintf(fp, "%d", vec[i * dim  + j]);
+            }
+            (void) fprintf(fp, "}\n");
+        }
+    }
+
+}
+// Bradley Treece
 static void pr_int(FILE *fp, int indent, const char *title, int i)
 {
     pr_indent(fp, indent);
@@ -1127,20 +1153,15 @@ void pr_inputrec(FILE *fp, int indent, const char *title, t_inputrec *ir,
         PR("userreal3", ir->userreal3);
         PR("userreal4", ir->userreal4);
 
-        //Brad
-        //
-        //
-        pr_reals_of_dim(fp, indent, "pot_indices", ir->pot_indices,    15, 1);
-        pr_reals_of_dim(fp, indent, "pot_params",   ir->pot_params,     3, 1);
-        pr_reals_of_dim(fp, indent, "pot_scale",     ir->pot_scale,     2, 1);
-        pr_reals_of_dim(fp, indent, "exp_dens",       ir->exp_dens, 10000, 1);
-        pr_reals_of_dim(fp, indent, "exp_mean",       ir->exp_mean,     1, 1);
-	//pr_int(fp, indent, "num_of_states", ir->num_of_states);
-        pr_double(fp, indent, "z_bbox", ir->z_bbox);
-        pr_double(fp, indent, "second_moment", ir->second_moment);
-        //
-        //
-        //Brad
+        //Bradley Treece
+        pr_ints_of_dim(fp, indent, "pot_indices", ir->neu_inp->pot_indices,    15, 1);
+        pr_reals_of_dim(fp, indent, "pot_params",   ir->neu_inp->pot_params,     3, 1);
+        pr_reals_of_dim(fp, indent, "pot_scale",     ir->neu_inp->pot_scale,     2, 1);
+        pr_reals_of_dim(fp, indent, "exp_dens",       ir->neu_inp->exp_dens, 10000, 1);
+        pr_reals_of_dim(fp, indent, "exp_mean",       ir->neu_inp->exp_mean,     1, 1);
+        pr_double(fp, indent, "z_bbox", ir->neu_inp->z_bbox);
+        pr_double(fp, indent, "second_moment", ir->neu_inp->second_moment);
+        //Bradley Treece
 
         pr_grp_opts(fp, indent, "grpopts", &(ir->opts), bMDPformat);
     }

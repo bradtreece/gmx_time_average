@@ -63,6 +63,8 @@
 #include "gromacs/utility/cstringutil.h"
 #include "gromacs/utility/fatalerror.h"
 #include "gromacs/utility/smalloc.h"
+//Bradley Treece TESTING
+#include "gromacs/neutron_bias/preprocess_configuration.h"
 
 #define MAXPTR 254
 #define NOGID  255
@@ -1826,6 +1828,7 @@ void get_ir(const char *mdparin, const char *mdparout,
     init_inputrec_strings();
     inp = read_inpfile(mdparin, &ninp, wi);
 
+
     snew(dumstr[0], STRLEN);
     snew(dumstr[1], STRLEN);
 
@@ -2293,7 +2296,7 @@ void get_ir(const char *mdparin, const char *mdparout,
     CCTYPE ("User defined thingies");
     STYPE ("user1-grps",  is->user1,          NULL);
     STYPE ("user2-grps",  is->user2,          NULL);
-    STYPE ("userstr1",    is->userstr1,       NULL); // Brad
+    STYPE ("userstr1",    is->userstr1,       NULL); // Bradley Treece
     ITYPE ("userint1",    ir->userint1,   0);
     ITYPE ("userint2",    ir->userint2,   0);
     ITYPE ("userint3",    ir->userint3,   0);
@@ -2304,142 +2307,9 @@ void get_ir(const char *mdparin, const char *mdparout,
     RTYPE ("userreal4",   ir->userreal4,  0);
 #undef CTYPE
 
-    // Brad defined file read
-    //
-    //
-    FILE *stream;
-    stream = fopen(is->userstr1,"r");
-    int line_len = 100000;
-    char temp_str[line_len];
-    char indctr[1];
-    int indices[2];
-    double grid_params[3];
-    float flt_tmp;
-    int str_offset;
-    int cnt;
-    double shape_pot_scale  = 1.0;
-    double offset_pot_scale = 1.0;
-
-    fgets(temp_str,line_len,stream);
-// Get the first character, should be a flag (u,n,p,d). In this case, u for the scaling factor.
-    sscanf(temp_str,"%s",indctr);
-    if (strcmp(indctr,"u")==0) {
-        sscanf(temp_str, "%s%lf%lf", indctr, &shape_pot_scale, &offset_pot_scale);
-        fgets(temp_str,line_len,stream);
-    }
-    double shape_pot_scale_kt = 0.4*shape_pot_scale;
-    (ir->pot_scale)[0] = shape_pot_scale;
-    double offset_pot_scale_kt = 0.4*offset_pot_scale;
-    (ir->pot_scale)[1] = offset_pot_scale;
-    fprintf(stderr, "\n\nThe scaling factor for the shape potential is %.3g kJ/mol: %.3g kT-nm/mol @ 300K.\n",
-             shape_pot_scale, shape_pot_scale_kt);
-    fprintf(stderr, "\nThe spring constant for the offset potential is %.3g kJ/mol-nm^2: %.3g kT/mol-nm^2 @ 300K.\n",
-             offset_pot_scale, offset_pot_scale_kt);
-
-    sscanf(temp_str,"%s",indctr);
-    
-    int ndx_pairs = 1;
-    while(strcmp(indctr,"n")==0) {
-        sscanf(temp_str,"%s%i%i",indctr,&indices[0],&indices[1]);
-        (ir->pot_indices)[2*ndx_pairs-1] = indices[0];
-        (ir->pot_indices)[2*ndx_pairs]   = indices[1];
-        fgets(temp_str,line_len,stream);
-        sscanf(temp_str,"%s",indctr);
-        ndx_pairs += 1;
-    }
-    fprintf(stderr,"\nThe number of molecules being forced is %i.\n",ndx_pairs-1);
-    if (ndx_pairs > 6)
-    {
-        fprintf(stderr,"\nThere are too many molecules, only 5 density slots are allotted.\n");
-    }
-    (ir->pot_indices)[0] = (float) ndx_pairs-1;
-
-/*  PRINT
-    for (cnt=0;(cnt<2*(ir->pot_indices)[0]+1);cnt++) {
-        fprintf(stderr,"%f,",(ir->pot_indices)[cnt]);
-    }
-    fprintf(stderr,"\n\n\n\n");
-*/
-
-
-    sscanf(temp_str,"%s%lf%lf%lf",indctr,&grid_params[0],&grid_params[1],&grid_params[2]);
-    (ir->pot_params)[0] = grid_params[0];
-    (ir->pot_params)[1] = grid_params[1];
-    (ir->pot_params)[2] = grid_params[2];
-    fprintf(stderr,"\nThe potential runs from %.5gnm to %.5gnm in %.5gnm steps.\n",grid_params[0],grid_params[1],grid_params[2]);
-    int num_points = round( (grid_params[1] - grid_params[0])/grid_params[2]+1 );
-    fprintf(stderr,"\nThe number of points in the density array from parameter specification is %i.\n",num_points);
-/*  PRINT
-    fprintf(stderr,"%f,%f,%f\n\n\n\n",(ir->pot_params)[0],(ir->pot_params)[1],(ir->pot_params)[2]);
-*/
-    fgets(temp_str,line_len,stream);
-    int neg_dens = 0;
-
-    sscanf(temp_str,"%s%n",indctr,&str_offset);
-    memmove(temp_str, temp_str+str_offset,line_len-str_offset);
-    memset(temp_str+line_len-str_offset,'0',str_offset);
-    cnt = 0;
-    while (sscanf(temp_str,"%f%n",&flt_tmp,&str_offset)>0) {
-        (ir->exp_dens)[cnt] = flt_tmp;
-        cnt+=1;
-        if (flt_tmp < 0) {
-            neg_dens = 1;
-        }
-        memmove(temp_str, temp_str+str_offset,line_len-str_offset);
-        memset(temp_str+line_len-str_offset,'0',str_offset);
-    }
-    if (neg_dens==1) {
-        fprintf(stderr,"\n\n\nCRITICAL ERROR: Densities less than zero encountered! Density should be greater than or equal to zero. Please make and adjustment!\n\n\n");
-    }
-    
-    fprintf(stderr,"\nThe number of points from reading the experimental density is %i.\n",cnt);
-    if (cnt != num_points) {
-        fprintf(stderr,"\n\n\nERROR: The number of points in the density do not match the parameter specification for the density, please make an adjustment.\n");
-    }
-    fprintf(stderr,"\n- Brad\n\n");
-/*  PRINT
-    for (int cnt2=0;(cnt2<cnt);cnt2++) {
-        fprintf(stderr,"%f\t",(ir->exp_dens)[cnt2]);
-    }
-    fprintf(stderr,"\n\n\n\n");
-*/
-
-    // Initialize rest of potential parameters
-    real brad_sum = 0.0;
-    int cnt2;
-    for (cnt2=0;cnt2<cnt;cnt2++)
-    {
-        brad_sum += grid_params[2]*(grid_params[0]+cnt2*grid_params[2])*(ir->exp_dens)[cnt2];
-    }
-    (ir->exp_mean)[0] = brad_sum;
-
-    for (cnt2=0;cnt2<5;cnt2++)
-    {
-        for (cnt=0;cnt<10000;cnt++)
-        {
-	    (ir->sim_dens)[cnt2][cnt] = 0.0;
-        }
-        (ir->sim_mean)[cnt2] = 0.0;
-    }
-    (ir->z_bbox) = 0.0;
-
-    // Second Moment of Experimental Potential, used to determine condition for inclusion in ensemble
-    brad_sum = 0.0;
-    for (cnt=0;cnt<10000;cnt++)
-    {
-        brad_sum += grid_params[2] * (ir->exp_dens)[cnt] * pow((grid_params[0]+cnt*grid_params[2] - (ir->exp_mean)[0]), 2.0);
-    }
-    ir->second_moment = pow(brad_sum, 0.5);
-    // Ensemble Averaged Density
-    //for (cnt=0;cnt<10000;cnt++)
-    //{
-    //    (ir->ens_dens)[cnt] = 0.0;
-    //}
-    // Number of states in ensemble average
-    //(ir->num_of_states) = 0;
-//
-//
-// Brad
+    // Bradley Treece TESTING
+    Read_Neutron_Input(is->userstr1, ir->neu_inp);
+    // Bradley Treece
 
     write_inpfile(mdparout, ninp, inp, FALSE, wi);
     for (i = 0; (i < ninp); i++)

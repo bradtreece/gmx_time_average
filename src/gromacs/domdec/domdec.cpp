@@ -1650,8 +1650,8 @@ void dd_collect_state(gmx_domdec_t *dd,
                 case estCGP:
                     dd_collect_vec(dd, state_local, state_local->cg_p, state->cg_p);
                     break;
-                case estnum_of_states: //Brad
-                case estens_dens: //Brad
+                case estnum_of_states: //Bradley Treece
+                case estens_dens: //Bradley Treece
                 case estDISRE_INITF:
                 case estDISRE_RM3TAV:
                 case estORIRE_INITF:
@@ -1693,8 +1693,8 @@ static void dd_realloc_state(t_state *state, rvec **f, int nalloc)
                 case estCGP:
                     srenew(state->cg_p, state->nalloc);
                     break;
-		case estnum_of_states: //Brad
-                case estens_dens: //Brad
+		case estnum_of_states: //Bradley Treece
+                case estens_dens: //Bradley Treece
                 case estDISRE_INITF:
                 case estDISRE_RM3TAV:
                 case estORIRE_INITF:
@@ -1952,8 +1952,8 @@ static void dd_distribute_state(gmx_domdec_t *dd, t_block *cgs,
                 case estCGP:
                     dd_distribute_vec(dd, cgs, state->cg_p, state_local->cg_p);
                     break;
-		case estnum_of_states: //Brad
-                case estens_dens: //Brad
+		case estnum_of_states: //Bradley Treece
+                case estens_dens: //Bradley Treece
 		case estDISRE_INITF:
                 case estDISRE_RM3TAV:
                 case estORIRE_INITF:
@@ -4721,8 +4721,8 @@ static void dd_redistribute_cg(FILE *fplog, gmx_int64_t step,
                 case estV:   bV   = (state->flags & (1<<i)); break;
                 case estSDX: bSDX = (state->flags & (1<<i)); break;
                 case estCGP: bCGP = (state->flags & (1<<i)); break;
-                case estnum_of_states: //Brad
-                case estens_dens: //Brad
+                case estnum_of_states: //Bradley Treece
+                case estens_dens: //Bradley Treece
                 case estLD_RNG:
                 case estLD_RNGI:
                 case estDISRE_INITF:
@@ -9277,8 +9277,8 @@ static void dd_sort_state(gmx_domdec_t *dd, rvec *cgcm, t_forcerec *fr, t_state 
                 case estCGP:
                     order_vec_atom(dd->ncg_home, cgindex, cgsort, state->cg_p, vbuf);
                     break;
-		case estnum_of_states: //Brad
-                case estens_dens: //Brad
+		case estnum_of_states: //Bradley Treece
+                case estens_dens: //Bradley Treece
                 case estLD_RNG:
                 case estLD_RNGI:
                 case estDISRE_INITF:

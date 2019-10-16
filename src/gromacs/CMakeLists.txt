@@ -123,8 +123,9 @@ if (NOT GMX_BUILD_MDRUN_ONLY)
     add_subdirectory(trajectoryanalysis)
     add_subdirectory(tools)
 endif()
+add_subdirectory(neutron_bias)
 
-list(APPEND LIBGROMACS_SOURCES ${GMXLIB_SOURCES} ${MDLIB_SOURCES})
+list(APPEND LIBGROMACS_SOURCES ${GMXLIB_SOURCES} ${MDLIB_SOURCES} ${NEUTRON_BIAS_SOURCES})
 
 # This would be the standard way to include thread_mpi, but
 # we want libgromacs to link the functions directly

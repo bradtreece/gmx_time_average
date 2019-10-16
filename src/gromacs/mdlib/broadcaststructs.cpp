@@ -251,8 +251,7 @@ void bcast_state(const t_commrec *cr, t_state *state)
     block_bc(cr, state->nnhpres);
     block_bc(cr, state->nhchainlength);
     block_bc(cr, state->flags);
-    block_bc(cr, state->num_of_states); // Brad brad BRAD
-    //block_bc(cr, state->ens_dens); // Brad brad BRAD
+    block_bc(cr, state->num_of_states); // Bradley Treece
     if (state->lambda == NULL)
     {
         snew_bc(cr, state->lambda, efptNR)

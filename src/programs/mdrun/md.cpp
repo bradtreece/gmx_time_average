@@ -111,6 +111,7 @@
 #include "gromacs/utility/fatalerror.h"
 #include "gromacs/utility/real.h"
 #include "gromacs/utility/smalloc.h"
+#include "gromacs/neutron_bias/update_density.h"//Brad
 
 #include "deform.h"
 #include "membed.h"
@@ -1065,20 +1066,13 @@ double do_md(FILE *fplog, t_commrec *cr, int nfile, const t_filenm fnm[],
         }
         else
         {
-            // Brad
+            // Bradley Treece
             if ((step%50)==0)
             {
-		//printf("\n\n\n num of states_local_prior = %i, node = %i \n\n\n", state->num_of_states, cr->nodeid);
-		//printf("\n\n\n num of states_global_prior = %i, node = %i \n\n\n", state_global->num_of_states, cr->nodeid);
-		//printf("\n\n\n num of states_ir_prior = %i \n\n\n", ir->num_of_states);
-                BRAD_compute_globals(fplog, gstat, cr, ir, fr, ekind, state, state_global, mdatoms, nrnb, vcm,
-                        NULL, enerd, force_vir, shake_vir, total_vir, pres, mu_tot,
-                        constr, NULL, FALSE, state->box,
-                        top_global, &bSumEkinhOld, cglo_flags);
-		//printf("\n\n\n num of states_local = %i, node = %i \n\n\n", state->num_of_states, cr->nodeid);
-		//printf("\n\n\n num of states_global = %i, node = %i \n\n\n", state_global->num_of_states, cr->nodeid);
+                BRAD_compute_globals(gstat, cr, ir, state, state_global, mdatoms,
+                        NULL, NULL, FALSE);
             }
-            // Brad
+            // Bradley Treece
 
             /* The coordinates (x) are shifted (to get whole molecules)
              * in do_force.

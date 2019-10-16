@@ -55,7 +55,7 @@ extern "C" {
  * The order of these enums should not be changed,
  * since that affects the checkpoint (.cpt) file format.
  */
-// Brad BRAD brad - estnum_of_states, estens_dens
+// Bradley Treece - estnum_of_states, estens_dens
 enum {
     estLAMBDA,
     estBOX, estBOX_REL, estBOXV, estPRES_PREV, estNH_XI,  estTC_INT,
@@ -257,8 +257,8 @@ typedef struct
     int             *cg_gl;           /* The global cg number of the local cgs        */
     int              cg_gl_nalloc;    /* Allocation size of cg_gl;              */
 
-    int              num_of_states;   /* Brad - number of states in time average */
-    double           *ens_dens;    /* Brad - time average of densities */
+    int              num_of_states;   /* Bradley Treece - number of states in time average */
+    double           *ens_dens;    /* Bradley Treece - time average of densities */
 } t_state;
 
 typedef struct

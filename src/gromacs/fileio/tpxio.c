@@ -60,6 +60,7 @@
 #include "gromacs/utility/fatalerror.h"
 #include "gromacs/utility/futil.h"
 #include "gromacs/utility/smalloc.h"
+#include "gromacs/neutron_bias/neutron_structs.h" // Bradley Treece
 
 #define TPX_TAG_RELEASE  "release"
 
@@ -1500,14 +1501,15 @@ static void do_inputrec(t_fileio *fio, t_inputrec *ir, gmx_bool bRead,
     gmx_fio_do_real(fio, ir->userreal3);
     gmx_fio_do_real(fio, ir->userreal4);
 
-    gmx_fio_ndo_real(fio, ir->pot_indices, 15); //Brad
-    gmx_fio_ndo_real(fio, ir->pot_params,   3); //Brad
-    gmx_fio_ndo_real(fio, ir->pot_scale,    2); //Brad
-    gmx_fio_ndo_real(fio, ir->exp_dens, 10000); //Brad
-    gmx_fio_ndo_real(fio, ir->exp_mean,     1); //Brad
-    //gmx_fio_do_int(fio, ir->num_of_states);     //Brad
-    gmx_fio_do_double(fio, ir->z_bbox);         //Brad
-    gmx_fio_do_double(fio, ir->second_moment);  //Brad
+    // Bradley Treece
+    gmx_fio_ndo_int(fio, ir->neu_inp->pot_indices, 15);
+    gmx_fio_ndo_real(fio, ir->neu_inp->pot_params,   3);
+    gmx_fio_ndo_real(fio, ir->neu_inp->pot_scale,    2);
+    gmx_fio_ndo_real(fio, ir->neu_inp->exp_dens, 10000);
+    gmx_fio_ndo_real(fio, ir->neu_inp->exp_mean,     1);
+    gmx_fio_do_double(fio, ir->neu_inp->z_bbox);
+    gmx_fio_do_double(fio, ir->neu_inp->second_moment);
+    // Bradley Treece
     
     /* AdResS stuff */
     if (file_version >= 77)

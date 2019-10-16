@@ -42,6 +42,7 @@
 #include "gromacs/legacyheaders/types/enums.h"
 #include "gromacs/legacyheaders/types/simple.h"
 #include "gromacs/swap/enums.h"
+#include "gromacs/neutron_bias/neutron_structs.h" // Bradley Treece
 
 #ifdef __cplusplus
 extern "C" {
@@ -437,24 +438,9 @@ typedef struct {
     real            userreal3;
     real            userreal4;
 
-    //Brad
-    //
-    //
-    real	    pot_indices[15];
-    real            pot_params[3];            /* Brad defined neutron parameters */
-    real            pot_scale[2];
-    real            exp_dens[10000];
-    real            exp_mean[1];
-    real            sim_dens[5][10000];
-    real            sim_dens_temp[10000];
-    real            sim_mean[5];             /* The intent is to have multiple molecules */
-    //real            ens_dens[10000];
-    //int             num_of_states;
-    double          z_bbox;
-    double          second_moment;
-    //
-    //
-    //
+    // Bradley Treece
+    t_neutron_input *neu_inp;
+    // Bradley Treece
 
     t_grpopts       opts;          /* Group options				*/
     t_cosines       ex[DIM];       /* Electric field stuff	(spatial part)		*/

@@ -429,30 +429,6 @@ void compute_globals(FILE *fplog, gmx_global_stat_t gstat, t_commrec *cr, t_inpu
     }
 }
 
-//Brad
-void BRAD_compute_globals(FILE *fplog, gmx_global_stat_t gstat, t_commrec *cr, t_inputrec *ir,
-                     t_forcerec *fr, gmx_ekindata_t *ekind,
-                     t_state *state, t_state *state_global, t_mdatoms *mdatoms,
-                     t_nrnb *nrnb, t_vcm *vcm, gmx_wallcycle_t wcycle,
-                     gmx_enerdata_t *enerd, tensor force_vir, tensor shake_vir, tensor total_vir,
-                     tensor pres, rvec mu_tot, gmx_constr_t constr,
-                     struct gmx_signalling_t *gs, gmx_bool bInterSimGS,
-                     matrix box, gmx_mtop_t *top_global,
-                     gmx_bool *bSumEkinhOld, int flags)
-{
-
-    gmx::ArrayRef<real> signalBuffer = prepareSignalBuffer(gs);
-    if (PAR(cr))
-    {
-        wallcycle_start(wcycle, ewcMoveE);
-        BRAD_global_stat(gstat, cr, ir, state, mdatoms, state_global);
-        wallcycle_stop(wcycle, ewcMoveE);
-    }
-    handleSignals(gs, cr, bInterSimGS);
-
-}
-//Brad
-
 void check_nst_param(FILE *fplog, t_commrec *cr,
                      const char *desc_nst, int nst,
                      const char *desc_p, int *p)
@@ -752,14 +728,14 @@ void set_state_entries(t_state *state, const t_inputrec *ir)
             snew(state->v, state->nalloc);
         }
     }
-    // Brad brad BRAD - this makes things crash later (domdec - fixed) Make space for flags?
+    // Bradley Treece - Make space for flags?
     state->flags |= (1<<estnum_of_states);
     state->flags |= (1<<estens_dens);
     if (state->ens_dens == NULL)
     {
         snew(state->ens_dens, 10000);
     }
-    // Brad brad BRAD
+    // Bradley Treece
     if (ir->eI == eiSD2)
     {
         state->flags |= (1<<estSDX);
