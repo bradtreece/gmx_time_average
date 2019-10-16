@@ -1502,13 +1502,15 @@ static void do_inputrec(t_fileio *fio, t_inputrec *ir, gmx_bool bRead,
     gmx_fio_do_real(fio, ir->userreal4);
 
     // Bradley Treece
-    gmx_fio_ndo_int(fio, ir->neu_inp->pot_indices, 15);
-    gmx_fio_ndo_real(fio, ir->neu_inp->pot_params,   3);
-    gmx_fio_ndo_real(fio, ir->neu_inp->pot_scale,    2);
-    gmx_fio_ndo_real(fio, ir->neu_inp->exp_dens, 10000);
-    gmx_fio_ndo_real(fio, ir->neu_inp->exp_mean,     1);
-    gmx_fio_do_double(fio, ir->neu_inp->z_bbox);
-    gmx_fio_do_double(fio, ir->neu_inp->second_moment);
+    gmx_fio_ndo_int(fio,   ir->neu_inp->pot_indices, 15);
+    int neu_atoms = (ir->neu_inp->pot_indices)[2] - (ir->neu_inp->pot_indices)[1] + 1;
+    gmx_fio_ndo_real(fio,  ir->neu_inp->pot_params,   3);
+    gmx_fio_ndo_real(fio,  ir->neu_inp->pot_scale,    2);
+    gmx_fio_ndo_real(fio,  ir->neu_inp->exp_dens, 10000);
+    gmx_fio_ndo_real(fio,  ir->neu_inp->exp_mean,     1);
+    gmx_fio_do_double(fio,          ir->neu_inp->z_bbox);
+    gmx_fio_do_double(fio,   ir->neu_inp->second_moment);
+    gmx_fio_ndo_real(fio, ir->neu_inp->radii, neu_atoms);
     // Bradley Treece
     
     /* AdResS stuff */

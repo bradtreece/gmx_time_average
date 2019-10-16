@@ -68,9 +68,9 @@ void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
     double zstep  = (inputrec->neu_inp->pot_params)[2];
     double z_bbox = (state_local->box)[2][2];
     double second_moment = (inputrec->neu_inp->second_moment);
-    double z, nrm, sum;
+    double z, nrm, sum, sigma;
     int    z_low = 0, z_hi = 0;
-    int    ndx_l, ndx_h, ii;
+    int    ndx_l, ndx_h, ii, glob_ndx;
 
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
     // Update z-vector for bounding box // 
@@ -85,9 +85,11 @@ void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
     for (ii = 0;ii < (int) (inputrec->neu_inp->pot_indices)[0];ii++)
     {
 	//printf("\n\n\nloop=%i,node=%i\n\n\n", ii, cr->nodeid);
-        ndx_l = (int) (inputrec->neu_inp->pot_indices)[2*ii+1] - 1; // Set the bounds of global index for forced atoms
-        ndx_h = (int) (inputrec->neu_inp->pot_indices)[2*ii+2] - 1;
-        nrm   = (ndx_h-ndx_l+1)*pow(2.0*M_PI,0.5)*0.1; // # of atoms * integral of single gaussian (sigma = 0.1 nm) gives a unit area for full profile as the norm 
+        ndx_l = (inputrec->neu_inp->pot_indices)[2*ii+1] - 1; // Set the bounds of global index for forced atoms
+        ndx_h = (inputrec->neu_inp->pot_indices)[2*ii+2] - 1;
+        // # of atoms * integral of single gaussian without the variance
+	// This gives a unit area for full profile after norm
+        nrm   = (ndx_h-ndx_l+1)*pow(2.0*M_PI,0.5);
 
 
         // Intialize the density variable
@@ -99,9 +101,12 @@ void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
         // Add up contributions
         for (i=0; i<homenr; i++)
         {
-            if ((cr->dd->gatindex[i] >= ndx_l)&&(cr->dd->gatindex[i] <= ndx_h))
+	    glob_ndx = cr->dd->gatindex[i];
+            if ((glob_ndx >= ndx_l)&&(glob_ndx <= ndx_h))
             {
                 z = (state_local->x)[i][2];
+		// The radius supplied (or default 0.1nm) determines the sigma for the Gaussian
+		sigma = (inputrec->neu_inp->radii)[glob_ndx-ndx_l];
                 // If the z-value is smaller than the minimum in the potential, add the z-value of the bounding box 
                 //     otherwise, the index for the array could compute to be negative. Only works for rectangular pbc.
                 if (z<zmin)
@@ -109,12 +114,12 @@ void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
                     z += z_bbox;
                 }
 		// The contribution comes from z +/- 3 sigma
-                z_low = floor( ( z-0.3 - zmin ) / zstep );
-                z_hi  = floor( ( z+0.3 - zmin ) / zstep );
+                z_low = floor( ( z-3*sigma - zmin ) / zstep );
+                z_hi  = floor( ( z+3*sigma - zmin ) / zstep );
 
                 for(j=z_low;(j<z_hi);j++) // Add in all the contribuitons to the density between +/- 3 sigma
                 {
-                    (inputrec->neu_inp->sim_dens_temp)[j] += exp(-0.5*pow( z-(zmin + zstep*j) ,2)/0.01)/nrm; // sigma**2 = 0.01 nm**2
+                    (inputrec->neu_inp->sim_dens_temp)[j] += exp( -0.5*pow( z-(zmin + zstep*j) ,2)/(sigma*sigma) )/(nrm*sigma);
                 }
             }
         }

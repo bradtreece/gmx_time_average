@@ -2102,15 +2102,6 @@ void do_force(FILE *fplog, t_commrec *cr,
 			   inputrec->neu_inp->sim_mean, inputrec->neu_inp->z_bbox,
                            inputrec->neu_inp->second_moment, mdatoms, cr);
 
-    /*if (fmod(t,0.1)==0.0)
-    {
-        printf("\n\n\n Hello Darkness My Old Friend: offset scale = %f\n", inputrec->pot_scale[1]);
-	for (int cnt2 = 0; cnt2<(inputrec->pot_indices)[0]; cnt2++)
-        {
-            printf("Mean[%i]=%f ", cnt2, (inputrec->sim_mean)[cnt2]);
-        }
-        printf(",   t=%f \n\n\n", t);
-    }*/
     // Bradley Treece
 }
 

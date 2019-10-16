@@ -12,7 +12,7 @@ extern "C" {
 #endif   
 
 typedef struct {
-    int            pot_indices[15];
+    int             pot_indices[15];
     real            pot_params[3];            /* Brad defined neutron parameters */
     real            pot_scale[2];
     real            exp_dens[10000];
@@ -20,10 +20,9 @@ typedef struct {
     real            sim_dens[5][10000];
     real            sim_dens_temp[10000];
     real            sim_mean[5];             /* The intent is to have multiple molecules */
-    //real            ens_dens[10000];
-    //int             num_of_states;
     double          z_bbox;
     double          second_moment;
+    real            *radii;
 } t_neutron_input;
 #ifdef __cplusplus
 }

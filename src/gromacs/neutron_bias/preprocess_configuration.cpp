@@ -36,6 +36,7 @@ enum neutron_data_flags {
     eIndices,
     ePotential_Parameters,
     eDensity,
+    eRadii,
     eError
 };
 
@@ -45,6 +46,7 @@ neutron_data_flags which_neutron_flag(const char *indicator)
     if (strcmp(indicator, "n")==0) return eIndices;
     if (strcmp(indicator, "p")==0) return ePotential_Parameters;
     if (strcmp(indicator, "d")==0) return eDensity;
+    if (strcmp(indicator, "r")==0) return eRadii;
     else return eError;
 }
 
@@ -56,6 +58,7 @@ void Read_Neutron_Input(const char *filename, t_neutron_input *neu_inp)
 
     int line_len = 100000;
     char temp_str[line_len];//This is bad if the data is very long
+    char radii_str[line_len];
     
     char indicator[1];
     int indices[2];
@@ -64,18 +67,19 @@ void Read_Neutron_Input(const char *filename, t_neutron_input *neu_inp)
     int str_offset;
     int cnt;
     int num_points = 0;
+    int n_atoms = 0;
     double shape_pot_scale = 1.0;
     double offset_pot_scale = 1.0;
     int index_pairs = 1;
     bool bNegative_Density = false;
+    bool bRadii = false;
     real sum = 0.0;
-
     /*---------------------------------------------------------------*/
 
     /*--------------------------------------------------------------------------------------------------------------------------------------*/
     while (fgets(temp_str, line_len, stream)!= NULL)
     {
-        // check the first character for the flags (u,n,p,d).
+        // check the first character for the flags (u,n,p,d,r).
         sscanf(temp_str, "%s", indicator);
 
         switch (which_neutron_flag(indicator))
@@ -124,7 +128,7 @@ void Read_Neutron_Input(const char *filename, t_neutron_input *neu_inp)
 		// Copy 'length - offset' worth of bytes from 'string start + offset' to 'string start' 
                 memmove(temp_str, temp_str+str_offset, line_len-str_offset);
 		// Set 'zeros' for the values from 'string start + length - offset' for next 'offset' bytes
-		memset(temp_str+line_len-str_offset, '0', str_offset);
+		memset(temp_str+line_len-str_offset, '-', str_offset);
                 
 		cnt = 0;
                 while ( sscanf(temp_str, "%f%n", &flt_tmp, &str_offset)>0 ) {
@@ -134,7 +138,7 @@ void Read_Neutron_Input(const char *filename, t_neutron_input *neu_inp)
 
 		    // Move on to the next
                     memmove(temp_str, temp_str+str_offset,line_len-str_offset);
-                    memset(temp_str+line_len-str_offset,'0',str_offset);
+                    memset(temp_str+line_len-str_offset,'-',str_offset);
                 }
 		if (bNegative_Density) {
                     fprintf(stderr,"\n\n\nCRITICAL ERROR: Densities less than zero encountered! Density should be greater than or equal to zero. Please make and adjustment!\n\n\n");
@@ -146,6 +150,17 @@ void Read_Neutron_Input(const char *filename, t_neutron_input *neu_inp)
                 }
 
 	        break;
+            
+            case eRadii:
+		bRadii = true;
+                // Remove the indicator at the front
+		sscanf(temp_str, "%s%n", indicator, &str_offset);
+                memmove(temp_str, temp_str+str_offset, line_len-str_offset);
+		memset(temp_str+line_len-str_offset, '-', str_offset);
+		// Save for later
+		strcpy(radii_str, temp_str);
+
+                break;
 
 	    default:
 		fprintf(stderr, "\nAn unexpected flag was found at the start of a line: %s\n", indicator);
@@ -155,6 +170,26 @@ void Read_Neutron_Input(const char *filename, t_neutron_input *neu_inp)
     (neu_inp->pot_indices)[0] = index_pairs-1;
     fprintf(stderr,"\n- Brad\n\n");
     /*--------------------------------------------------------------------------------------------------------------------------------------*/
+
+    /*---------------------------------------------------------------------------------------------------------*/
+    // Radii for Gaussian densities per atom
+    n_atoms = (neu_inp->pot_indices)[2] - (neu_inp->pot_indices)[1] + 1;
+    snew(neu_inp->radii, n_atoms);
+    if (bRadii) {
+        for (cnt = 0; cnt < n_atoms; cnt++)
+	{
+            sscanf(temp_str, "%f%n", &flt_tmp, &str_offset);
+            (neu_inp->radii)[cnt] = flt_tmp;
+            cnt+=1;
+            // Move on to the next
+            memmove(temp_str, temp_str+str_offset,line_len-str_offset);
+            memset(temp_str+line_len-str_offset,'-',str_offset);
+        }
+    } else {
+        for (cnt = 0; cnt < n_atoms; cnt++)
+	{ (neu_inp->radii)[cnt] = 0.1; } // Default is 0.1nm = 1A
+	
+    }
 
     // First Moment of the experimental density
     sum = 0.0;
@@ -176,6 +211,6 @@ void Read_Neutron_Input(const char *filename, t_neutron_input *neu_inp)
     for (cnt = 0; cnt < num_points; cnt++)
     { sum += grid_params[2] * (neu_inp->exp_dens)[cnt] * pow( (grid_params[0] + cnt*grid_params[2] - (neu_inp->exp_mean)[0]), 2.0); }
     (neu_inp->second_moment) = pow(sum, 0.5);
-
+    /*---------------------------------------------------------------------------------------------------------*/
 }
 //Brad
