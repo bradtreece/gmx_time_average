@@ -23,6 +23,7 @@ typedef struct {
     double          z_bbox;
     double          second_moment;
     real            *radii;
+    double            volume;
 } t_neutron_input;
 #ifdef __cplusplus
 }

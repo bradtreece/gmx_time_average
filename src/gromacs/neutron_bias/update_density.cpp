@@ -87,9 +87,9 @@ void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
 	//printf("\n\n\nloop=%i,node=%i\n\n\n", ii, cr->nodeid);
         ndx_l = (inputrec->neu_inp->pot_indices)[2*ii+1] - 1; // Set the bounds of global index for forced atoms
         ndx_h = (inputrec->neu_inp->pot_indices)[2*ii+2] - 1;
-        // # of atoms * integral of single gaussian without the variance
+        // Volume of all atoms * integral of single gaussian without the variance
 	// This gives a unit area for full profile after norm
-        nrm   = (ndx_h-ndx_l+1)*pow(2.0*M_PI,0.5);
+        nrm   = (inputrec->neu_inp->volume)*pow(2.0*M_PI,0.5);
 
 
         // Intialize the density variable
@@ -118,8 +118,8 @@ void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
                 z_hi  = floor( ( z+3*sigma - zmin ) / zstep );
 
                 for(j=z_low;(j<z_hi);j++) // Add in all the contribuitons to the density between +/- 3 sigma
-                {
-                    (inputrec->neu_inp->sim_dens_temp)[j] += exp( -0.5*pow( z-(zmin + zstep*j) ,2)/(sigma*sigma) )/(nrm*sigma);
+                { // Multiplying the Gaussian by R^2 gives an integral of R^3. After summing, this gives neu_inp->volume, which is in the normalization. Area = 1
+                    (inputrec->neu_inp->sim_dens_temp)[j] += sigma*sigma*exp( -0.5*pow( z-(zmin + zstep*j) ,2)/(sigma*sigma) )/(nrm);
                 }
             }
         }

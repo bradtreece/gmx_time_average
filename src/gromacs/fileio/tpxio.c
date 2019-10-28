@@ -1511,6 +1511,7 @@ static void do_inputrec(t_fileio *fio, t_inputrec *ir, gmx_bool bRead,
     gmx_fio_do_double(fio,          ir->neu_inp->z_bbox);
     gmx_fio_do_double(fio,   ir->neu_inp->second_moment);
     gmx_fio_ndo_real(fio, ir->neu_inp->radii, neu_atoms);
+    gmx_fio_do_double(fio,          ir->neu_inp->volume);
     // Bradley Treece
     
     /* AdResS stuff */

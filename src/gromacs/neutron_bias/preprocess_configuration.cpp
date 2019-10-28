@@ -175,11 +175,13 @@ void Read_Neutron_Input(const char *filename, t_neutron_input *neu_inp)
     // Radii for Gaussian densities per atom
     n_atoms = (neu_inp->pot_indices)[2] - (neu_inp->pot_indices)[1] + 1;
     snew(neu_inp->radii, n_atoms);
+    sum = 0.0; // Tracking the total volume of the atoms' spheres (normalized by 3/4pi)
     if (bRadii) {
         for (cnt = 0; cnt < n_atoms; cnt++)
 	{
             sscanf(temp_str, "%f%n", &flt_tmp, &str_offset);
             (neu_inp->radii)[cnt] = flt_tmp;
+	    sum += flt_tmp*flt_tmp*flt_tmp; // R^3
             cnt+=1;
             // Move on to the next
             memmove(temp_str, temp_str+str_offset,line_len-str_offset);
@@ -187,9 +189,12 @@ void Read_Neutron_Input(const char *filename, t_neutron_input *neu_inp)
         }
     } else {
         for (cnt = 0; cnt < n_atoms; cnt++)
-	{ (neu_inp->radii)[cnt] = 0.1; } // Default is 0.1nm = 1A
-	
+	{ 
+	    (neu_inp->radii)[cnt] = 0.1; // Default is 0.1nm = 1A
+	    sum += 0.001; // R^3
+	}
     }
+    (neu_inp->volume) = sum;
 
     // First Moment of the experimental density
     sum = 0.0;

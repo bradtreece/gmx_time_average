@@ -1160,9 +1160,10 @@ void pr_inputrec(FILE *fp, int indent, const char *title, t_inputrec *ir,
         pr_reals_of_dim(fp, indent, "pot_scale",     ir->neu_inp->pot_scale,     2, 1);
         pr_reals_of_dim(fp, indent, "exp_dens",       ir->neu_inp->exp_dens, 10000, 1);
         pr_reals_of_dim(fp, indent, "exp_mean",       ir->neu_inp->exp_mean,     1, 1);
-        pr_double(fp, indent, "z_bbox", ir->neu_inp->z_bbox);
-        pr_double(fp, indent, "second_moment", ir->neu_inp->second_moment);
-	pr_reals_of_dim(fp, indent, "radii", ir->neu_inp->radii, neu_atoms, 1);
+        pr_double(      fp, indent, "z_bbox",                ir->neu_inp->z_bbox);
+        pr_double(      fp, indent, "second_moment",  ir->neu_inp->second_moment);
+	pr_reals_of_dim(fp, indent, "radii",       ir->neu_inp->radii, neu_atoms, 1);
+	pr_double(      fp, indent, "volume",                 ir->neu_inp->volume);
         //Bradley Treece
 
         pr_grp_opts(fp, indent, "grpopts", &(ir->opts), bMDPformat);
