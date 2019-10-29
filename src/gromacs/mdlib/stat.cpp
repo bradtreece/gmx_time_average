@@ -38,6 +38,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <cmath>//Brad
 
 #include "gromacs/domdec/domdec.h"
 #include "gromacs/fileio/gmxfio.h"
@@ -511,7 +512,7 @@ void BRAD_global_stat(gmx_global_stat_t gs, t_commrec *cr,
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
         
         // If the offset < the width of the profile, update the ensemble
-        if ( abs( (inputrec->sim_mean)[ii] - (inputrec->exp_mean)[0] ) < second_moment)
+        if ( std::abs( (inputrec->sim_mean)[ii] - (inputrec->exp_mean)[0] ) < second_moment)
 	//if (0.0 == 0.0)
         {
             for (i=0; i<10000; i++)

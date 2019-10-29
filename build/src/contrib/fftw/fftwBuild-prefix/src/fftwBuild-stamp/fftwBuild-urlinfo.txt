@@ -1,3 +1,0 @@
-repository='external project URL'
-module='/Archival/gromacs/gmx_mpi_ensemble/build/src/contrib/fftw/fftw.tar.gz'
-tag='MD5=2edab8c06b24feeb3b82bbb3ebf3e7b3'
